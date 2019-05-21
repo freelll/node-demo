@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>导航</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="./b.css">
+    </head>
+    <body>
+        <header></header>
+        <main>
+            
+            <div class="wrapper" id="ccc"  >
+
+                </div>
+        </main>
+        <footer></footer>
+        <script>
+            var keys = {
+                0: ['q','w','e','r','t','y','u','i','o','p'],
+                1: ['a','s','d','f','g','h','j','k','l'],
+                2: ['z','x','c','v','b','n','m'],
+                length: 3
+            }
+            var hash = {
+                q: 'qq.com',
+                w: 'weibo.com',
+                e: 'ele.me',
+                r: 'renren.com',
+                t: 'tianya.com',
+                y: 'yaho.cn',
+                u: 'uc.com',
+                i: 'iqiyi.com',
+                o: 'opera.com',
+                a: 'acfun.tv',
+                s: 'sohu.com',
+                z: 'zhihu.com'
+            }
+            var hashInLocalStorage = JSON.parse(localStorage.getItem('ddd') || 'null')
+            if (hashInLocalStorage){
+                hash = hashInLocalStorage
+            }
+            var index = 0
+            while(index<keys['length']){
+                var div1 = document.createElement('div')
+                div1.className = 'row'
+                ccc.appendChild(div1)
+                var row = keys[index]
+                var index2 = 0
+                while(index2<row['length']){
+                    var keyboard = document.createElement('kbd')
+                    var span = document.createElement('span')
+                    span.textContent = row[index2]
+                    span.className = 'text'
+                    keyboard.appendChild(span)
+                    keyboard.className = 'k'
+                    var button1 = document.createElement('button')
+                    button1.textContent = '编辑'
+                    button1.id = row[index2]
+                    var img = document.createElement('img')
+                    if(hash[row[index2]]){
+                        img.src ='http://' + hash[row[index2]] + '/favicon.ico'
+                    }
+                    else{img.src = './img1.jpg'}
+                    img.onerror = function(bbb){
+                        bbb.target.src = './img1.jpg'
+
+                    }
+                   
+                    button1.onclick = function(bbbbb){
+                        var button2 = bbbbb['target']
+                        var key = button2['id']
+                        var img2 = button2.previousSibling
+                        var zzz = prompt('给我一个网址')
+                        hash[key] = zzz
+                        img2.src = 'http://' + zzz +'/favicon.ico'
+                        img.onerror = function(bbb){
+                        bbb.target.src = './img1.jpg'}
+                        localStorage.setItem('ddd', JSON.stringify(hash))
+                        console.log(hash)
+                    }
+                    keyboard.appendChild(img)
+                    keyboard.appendChild(button1)
+                    div1.appendChild(keyboard)
+                    index2 = index2 + 1
+                }
+                index = index + 1
+            }
+           document.onkeypress = function(aaaaa){
+               var key = aaaaa['key']
+               var website = hash[key]
+               //location.href ='http://' + website
+               window.open('http://'+ website, '_blank')
+           }
+        </script>
+    </body>
+</html>
